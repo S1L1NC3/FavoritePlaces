@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF8000</color>
+    <color name="colorPrimaryDark">#CC6600</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorDarkBrown">#694432</color>
+    <color name="floationg_button_background_color">#FF8000</color>
+    <color name="login_button_background_color">#DEA266</color>
+    <color name="login_button_background_seventy_five_percent_color">#BFDEA266</color>
+</resources>

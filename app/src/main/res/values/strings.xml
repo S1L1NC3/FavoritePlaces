@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FavoritePlacesJavaVersion</string>
+    <string name="title_activity_maps">Map Java</string>
+    <string name="contentDescription" translatable="false">contentDescription</string>
+    <string name="login">LOGIN</string>
+    <string name="or">Or</string>
+    <string name="email_cant_be_empty">E-Mail can\'t be empty</string>
+    <string name="email_wrong">E-Mail Wrong</string>
+    <string name="welcome">Welcome</string>
+    <string name="to">To</string>
+    <string name="password_empty">Password can\'t be empty</string>
+    <string name="email">E-Mail</string>
+    <string name="signup">SIGNUP</string>
+    <string name="password">Password</string>
+</resources>

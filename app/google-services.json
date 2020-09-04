@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "854282110999",
+    "firebase_url": "https://favoriteplacesjavaversion.firebaseio.com",
+    "project_id": "favoriteplacesjavaversion",
+    "storage_bucket": "favoriteplacesjavaversion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854282110999:android:69036bdc74a47f5096b452",
+        "android_client_info": {
+          "package_name": "com.dmd.favoriteplacesjavaversion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854282110999-qhm48q578a05rd901lb55uiab0drlcqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgfs3hY_mzvUlizVjsLuTtc1ncRXhWbNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854282110999-qhm48q578a05rd901lb55uiab0drlcqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
