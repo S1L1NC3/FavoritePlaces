@@ -99,6 +99,7 @@
         android:layout_height="175dp"
         android:contentDescription="@string/contentDescription"
         android:scaleType="fitXY"
+        android:transitionName="@string/splash_to_login_transition"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
