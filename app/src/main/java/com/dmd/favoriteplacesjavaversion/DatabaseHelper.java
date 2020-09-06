@@ -12,7 +12,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class DatabaseHelper {
     private Context contextLocal;
     private static SQLiteDatabase database;
-
+    //Table name MyLocations
     public DatabaseHelper(Context context) {
         contextLocal = context;
     }
@@ -44,18 +44,33 @@ public class DatabaseHelper {
     }
 
     //Insert Into Database
-    public boolean insertIntoLocations(String locationName, Double locationLatitude, Double locationLongitude ){
+    public boolean insertIntoLocations(String locationName, Double locationLatitude, Double locationLongitude){
         try{
             SQLiteStatement sqLiteStatement = database.compileStatement("INSERT INTO MyLocations (locationName, locationLatitude, locationLongitude) values (?,?,?)");
 
             sqLiteStatement.bindString(1, locationName);
             sqLiteStatement.bindDouble(2, locationLatitude);
             sqLiteStatement.bindDouble(3, locationLongitude);
-
             sqLiteStatement.executeInsert();
-
             return true;
         } catch (SQLException exception){
+            return false;
+        }
+    }
+
+    //Update data in Database
+    public boolean updateDataInMyLocations(String locationName, Double locationLatitude, Double locationLongitude, int idForDelete){
+        try{
+            SQLiteStatement sqLiteStatement = database.compileStatement("UPDATE MyLocations SET locationName = ?, locationLongitude = ?, locationLatitude = ? WHERE _id = ?");
+
+            sqLiteStatement.bindString(1, locationName);
+            sqLiteStatement.bindDouble(2, locationLatitude);
+            sqLiteStatement.bindDouble(3, locationLongitude);
+            sqLiteStatement.bindLong(4, idForDelete);
+
+            sqLiteStatement.execute();
+            return true;
+        } catch (Exception ignored){
             return false;
         }
     }
