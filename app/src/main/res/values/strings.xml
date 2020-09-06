@@ -14,5 +14,6 @@
     <string name="password">Password</string>
     <string name="database_name">FavoritePlaces</string>
     <string name="add_place">Add Place</string>
+    <string name="press_again_to_exit">Please click BACK again to exit</string>
     <string name="splash_to_login_transition">splashToLoginTransition</string>
 </resources>

@@ -2,7 +2,9 @@ package com.dmd.favoriteplacesjavaversion.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -10,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 
-import com.dmd.favoriteplacesjavaversion.DatabaseHelper;
 import com.dmd.favoriteplacesjavaversion.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -22,12 +23,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         transistionImageView = findViewById(R.id.imageView4);
-        //String  uniqueID = UUID.randomUUID().toString();
 
+        /*
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         databaseHelper.openConnection();
-
-        //databaseHelper.dropDb();
 
         databaseHelper.createTableIfNotExists();
         if (databaseHelper.insertIntoLocations("deneme",50.8549541,4.3053507)){
@@ -38,28 +37,31 @@ public class SplashScreenActivity extends AppCompatActivity {
         databaseHelper.removeFromLocations(2);
         databaseHelper.trackAllData();
         databaseHelper.closeConnection();
+        */
 
-        //this.deleteDatabase(getResources().getString(R.string.database_name));
         //openNewActivity();
-        /*
-        Thread timerThread = new Thread(){
-            public void run(){
-                try{
-                    sleep(3000);
-                }catch(InterruptedException e){
-                    e.printStackTrace();
-                }finally{
 
+        transistionImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewActivity();
 
-                }
             }
-        };
-        timerThread.start();*/
+        });
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                openNewActivity();
+            }
+        },3000);
 
     }
 
     private void openNewActivity(){
         Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SplashScreenActivity.this, transistionImageView, ViewCompat.getTransitionName(transistionImageView));
         startActivity(intent, optionsCompat.toBundle());
     }

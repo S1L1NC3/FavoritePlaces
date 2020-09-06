@@ -1,7 +1,7 @@
 package com.dmd.favoriteplacesjavaversion.activities;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import com.dmd.favoriteplacesjavaversion.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private  ImageButton showHidePasswordButton;
     private  EditText editTextEmail, editTextPassword;
+    private boolean doubleBackToExitPressedOnce = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,5 +132,22 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            finishAffinity();
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this,getApplicationContext().getResources().getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }
