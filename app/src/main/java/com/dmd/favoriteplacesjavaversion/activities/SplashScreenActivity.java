@@ -40,14 +40,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         */
 
         //openNewActivity();
-
+/*
         transistionImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewActivity();
 
             }
-        });
+        });*/
 
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {

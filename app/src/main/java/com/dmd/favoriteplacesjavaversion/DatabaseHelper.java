@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.dmd.favoriteplacesjavaversion.model.FavoritePlace;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class DatabaseHelper {
@@ -98,6 +103,33 @@ public class DatabaseHelper {
 
     }
 
+    //Get Data From MyLocations
+    public List<FavoritePlace> getDataFromMyLocations(){
+        List<FavoritePlace> favoritePlaces = new ArrayList<>();
+        Cursor cursor = null;
+        try{
+            cursor = database.rawQuery("SELECT * FROM MyLocations", null);
+        } catch (Exception ignored){
+
+        }
+
+        if (cursor != null){
+            int idIndex = cursor.getColumnIndex("Id");
+            int locationNameIndex = cursor.getColumnIndex("locationName");
+            int locationLatitudeIndex = cursor.getColumnIndex("locationLatitude");
+            int locationLongitudeIndex = cursor.getColumnIndex("locationLongitude");
+
+            while (cursor.moveToNext()){
+                FavoritePlace favoritePlaceInstance = new FavoritePlace(cursor.getInt(idIndex),
+                        cursor.getString(locationNameIndex),
+                        cursor.getDouble(locationLatitudeIndex),
+                        cursor.getDouble(locationLongitudeIndex));
+                favoritePlaces.add(favoritePlaceInstance);
+            }
+        }
+        return favoritePlaces;
+    }
+
     //Log Database
     public void trackAllData(){
         Cursor cursor = null;
@@ -109,13 +141,13 @@ public class DatabaseHelper {
 
         if (cursor != null){
             int idIndex = cursor.getColumnIndex("Id");
-            int locatioNameIndex = cursor.getColumnIndex("locationName");
+            int locationNameIndex = cursor.getColumnIndex("locationName");
             int locationLatitudeIndex = cursor.getColumnIndex("locationLatitude");
             int locationLongitudeIndex = cursor.getColumnIndex("locationLongitude");
 
             while (cursor.moveToNext()){
                 Log.i("DbTrackLog", "idIndex: " + cursor.getString(idIndex));
-                Log.i("DbTrackLog", "locatioNameIndex: " + cursor.getString(locatioNameIndex));
+                Log.i("DbTrackLog", "locatioNameIndex: " + cursor.getString(locationNameIndex));
                 Log.i("DbTrackLog", "locationLatitudeIndex: " + cursor.getDouble(locationLatitudeIndex));
                 Log.i("DbTrackLog", "locationLongitudeIndex: " + cursor.getDouble(locationLongitudeIndex));
             }

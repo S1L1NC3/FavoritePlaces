@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dmd.favoriteplacesjavaversion.DatabaseHelper;
 import com.dmd.favoriteplacesjavaversion.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,8 +28,8 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private Button loginButton;
-    private  ImageButton showHidePasswordButton;
+    private Button buttonLogin;
+    private  ImageButton buttonShowHidePassword;
     private  EditText editTextEmail, editTextPassword;
     private boolean doubleBackToExitPressedOnce = false;
 
@@ -37,26 +38,35 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginButton = findViewById(R.id.loginButton);
-        showHidePasswordButton = findViewById(R.id.showHidePasswordButton);
+        buttonLogin = findViewById(R.id.loginButton);
+        buttonShowHidePassword = findViewById(R.id.showHidePasswordButton);
         editTextEmail = findViewById(R.id.editTextTextEmail);
         editTextPassword = findViewById(R.id.editTextTextPassword);
 
-        showHidePasswordButton.setOnClickListener(new View.OnClickListener() {
+        DatabaseHelper x = new DatabaseHelper(getApplicationContext());
+        x.openConnection();
+        //x.insertIntoLocations("deneme",41.0222592,28.9406976);
+        //x.insertIntoLocations("deneme1",42.0222592,28.9406976);
+        //x.insertIntoLocations("deneme2",43.0222592,28.9406976);
+        //x.insertIntoLocations("deneme3",44.0222592,28.9406976);
+        x.trackAllData();
+        x.getDataFromMyLocations();
+
+        buttonShowHidePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (editTextPassword.getTransformationMethod() == HideReturnsTransformationMethod.getInstance()){
                     editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    showHidePasswordButton.setImageResource(R.drawable.show_password);
+                    buttonShowHidePassword.setImageResource(R.drawable.show_password);
                 } else {
                     editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    showHidePasswordButton.setImageResource(R.drawable.hide_password);
+                    buttonShowHidePassword.setImageResource(R.drawable.hide_password);
                 }
                 editTextPassword.setSelection(editTextPassword.getText().length());
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String email = editTextEmail.getText().toString();
@@ -120,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.i("FirebaseAuthentication", "signInWithEmail:success");
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Authentication done.",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                         } else {
