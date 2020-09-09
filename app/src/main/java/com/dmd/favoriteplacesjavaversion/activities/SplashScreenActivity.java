@@ -1,17 +1,14 @@
 package com.dmd.favoriteplacesjavaversion.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
 
+import com.dmd.favoriteplacesjavaversion.GlobalHelper;
 import com.dmd.favoriteplacesjavaversion.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -39,30 +36,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         databaseHelper.closeConnection();
         */
 
-        //openNewActivity();
-/*
-        transistionImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openNewActivity();
-
-            }
-        });*/
-
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                openNewActivity();
+                GlobalHelper.openNewActivity(SplashScreenActivity.this, LoginActivity.class, transistionImageView);
             }
         },3000);
 
-    }
-
-    private void openNewActivity(){
-        Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SplashScreenActivity.this, transistionImageView, ViewCompat.getTransitionName(transistionImageView));
-        startActivity(intent, optionsCompat.toBundle());
     }
 }

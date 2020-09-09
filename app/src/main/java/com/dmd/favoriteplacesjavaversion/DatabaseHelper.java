@@ -130,6 +130,34 @@ public class DatabaseHelper {
         return favoritePlaces;
     }
 
+    //Get Data From MyLocations
+    public  List<FavoritePlace> getDataFromMyLocationsContains(String areaToSearch, String containsCharacter){
+        List<FavoritePlace> favoritePlaces = new ArrayList<>();
+        Cursor cursor = null;
+        String[] parameterArray = new String [] {String.valueOf(areaToSearch), String.valueOf(containsCharacter)};
+        try{
+            cursor = database.rawQuery("SELECT * FROM MyLocations WHERE ? LIKE ? ", parameterArray);
+        } catch (Exception ignored){
+
+        }
+
+        if (cursor != null){
+            int idIndex = cursor.getColumnIndex("Id");
+            int locationNameIndex = cursor.getColumnIndex("locationName");
+            int locationLatitudeIndex = cursor.getColumnIndex("locationLatitude");
+            int locationLongitudeIndex = cursor.getColumnIndex("locationLongitude");
+
+            while (cursor.moveToNext()){
+                FavoritePlace favoritePlaceInstance = new FavoritePlace(cursor.getInt(idIndex),
+                        cursor.getString(locationNameIndex),
+                        cursor.getDouble(locationLatitudeIndex),
+                        cursor.getDouble(locationLongitudeIndex));
+                favoritePlaces.add(favoritePlaceInstance);
+            }
+        }
+        return favoritePlaces;
+    }
+
     //Log Database
     public void trackAllData(){
         Cursor cursor = null;

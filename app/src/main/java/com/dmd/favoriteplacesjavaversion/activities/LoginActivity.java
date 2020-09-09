@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dmd.favoriteplacesjavaversion.DatabaseHelper;
+import com.dmd.favoriteplacesjavaversion.GlobalHelper;
 import com.dmd.favoriteplacesjavaversion.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -128,14 +129,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.i("FirebaseAuthentication", "signInWithEmail:success");
                             Toast.makeText(LoginActivity.this, "Authentication done.",
                                     Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            editTextEmail.getText().clear();
+                            editTextPassword.getText().clear();
+                            GlobalHelper.openNewActivity(getApplicationContext(), MainActivity.class);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.i("FirebaseAuthentication", "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
