@@ -1,7 +1,9 @@
 package com.dmd.favoriteplacesjavaversion.activities;
 
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,11 +24,20 @@ import com.dmd.favoriteplacesjavaversion.GlobalHelper;
 import com.dmd.favoriteplacesjavaversion.R;
 import com.dmd.favoriteplacesjavaversion.fragments.ListFragment;
 import com.dmd.favoriteplacesjavaversion.fragments.MapsFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
     private Fragment listFragment = new ListFragment();
     private Fragment mapFragment = new MapsFragment();
     private ImageButton imageButton;
@@ -55,6 +66,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         changeFragment(listFragment);
         mAuth = FirebaseAuth.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName()+"/drawable/show_password");
+        UUID uuid = UUID.randomUUID();
+        String imageName = "images/profile_images/" +  uuid + ".jpg";
+        storageReference.child(imageName).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.i("storageReferenceUpload", "onSuccess: success");
+            }
+        }). addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("storageReferenceUpload", "onSuccess: fail");
+            }
+        });
+
+        StorageReference newRe = FirebaseStorage.getInstance().getReference();
+        newRe.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                String download = uri.toString();
+            }
+        });
+
         FirebaseUser user = mAuth.getCurrentUser();
 
         //ListView listView = (ListView) findViewById(R.id.listView);
