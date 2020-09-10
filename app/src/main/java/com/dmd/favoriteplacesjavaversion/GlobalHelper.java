@@ -21,7 +21,7 @@ public class GlobalHelper {
     public static void openNewActivity(AppCompatActivity classFromContext, Class classToOpen, ImageView transistionImageView){
         Intent intent = new Intent(classFromContext, classToOpen);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(classFromContext, transistionImageView, ViewCompat.getTransitionName(transistionImageView));
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(classFromContext, intent, optionsCompat.toBundle());
     }
 }

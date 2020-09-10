@@ -3,7 +3,6 @@ package com.dmd.favoriteplacesjavaversion.activities;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,23 +19,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.dmd.favoriteplacesjavaversion.FirebaseHelper;
 import com.dmd.favoriteplacesjavaversion.GlobalHelper;
 import com.dmd.favoriteplacesjavaversion.R;
+import com.dmd.favoriteplacesjavaversion.enums.FileExtensions;
+import com.dmd.favoriteplacesjavaversion.enums.FirebaseFirestoreCollections;
+import com.dmd.favoriteplacesjavaversion.enums.FirebasePaths;
 import com.dmd.favoriteplacesjavaversion.fragments.ListFragment;
 import com.dmd.favoriteplacesjavaversion.fragments.MapsFragment;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private FirebaseStorage firebaseStorage;
+    private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
     private Fragment listFragment = new ListFragment();
     private Fragment mapFragment = new MapsFragment();
@@ -66,32 +65,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         changeFragment(listFragment);
         mAuth = FirebaseAuth.getInstance();
-        firebaseStorage = FirebaseStorage.getInstance();
-        storageReference = firebaseStorage.getReference();
-        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName()+"/drawable/show_password");
-        UUID uuid = UUID.randomUUID();
-        String imageName = "images/profile_images/" +  uuid + ".jpg";
-        storageReference.child(imageName).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.i("storageReferenceUpload", "onSuccess: success");
-            }
-        }). addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.i("storageReferenceUpload", "onSuccess: fail");
-            }
-        });
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
-        StorageReference newRe = FirebaseStorage.getInstance().getReference();
-        newRe.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                String download = uri.toString();
-            }
-        });
+        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName()+"/drawable/app_icon");
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseHelper object = new FirebaseHelper(mAuth, firebaseFirestore, storageReference);
+        object.uploadFile(FirebasePaths.PROFILE_PHOTOS, uri, FileExtensions.JPG, FirebaseFirestoreCollections.POSTS);
+        object.uploadFile(FirebasePaths.SOUNDS, uri, FileExtensions.JPG, FirebaseFirestoreCollections.OTHER);
+        object.uploadFile(FirebasePaths.VIDEOS, uri, FileExtensions.JPG, FirebaseFirestoreCollections.VIDEOS);
+        object.uploadFile(FirebasePaths.IMAGES, uri, FileExtensions.JPG, FirebaseFirestoreCollections.IMAGES);
 
         //ListView listView = (ListView) findViewById(R.id.listView);
         imageButton = (ImageButton) findViewById(R.id.imageButton);
